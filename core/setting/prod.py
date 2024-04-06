@@ -7,7 +7,7 @@ from core.settings import *
 SECRET_KEY = 'django-insecure-a4xmzjuz44_6k+!l@=8y&+_@ef8oh#^6!g_^j)v4vrgpc-*@1l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = ["*"]
@@ -16,12 +16,12 @@ SITE_ID = 2
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'interesting_blackwell',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
         'USER': 'root',
-        'PASSWORD': 'IceQ8HD91S2lgl9Y6MSB7UmA',
-        'HOST': 'askari1386',
-        'PORT': 3306,
+        'PASSWORD': 'x8W82CEhzDjwaYwVivcnPdTP',
+        'HOST': 'askari86',
+        'PORT': 5432,
     }
 }
 

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+{% block styles %}
+<!-- Include Bootstrap CSS -->
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group.inline {
+        display: flex;
+    }
+    /* اعمال استایل‌ها برای ورودی‌های نام و ایمیل */
+    .form-group.inline input[type="text"],
+    .form-group.inline input[type="email"] {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+    
+
+    .form-group textarea {
+        width: 100%;
+    }
+    .form-group.captcha {
+        text-align: center;
+    }
+    .form-group.captcha img {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+    .form-group.button {
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<main id="main">
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="contact-container" data-aos="fade-up">
+                        <header class="section-header text-center">
+                            <h2>Contact</h2>
+                            <p>Contact Us</p>
+                        </header>
+                        <form action="{% url 'web:contact' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group inline">
+                                <input name="name" placeholder="Enter your name" class="form-control" required type="text"><br>
+                                <input name="email" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" class="form-control" required type="email"><br>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input name="subject" placeholder="Enter subject" class="form-control" required type="text"><br>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="message" placeholder="Enter Message" rows="6" required></textarea><br>
+                            </div>
+                            {{ form.captcha }}
+                            <button class="btn btn-primary" type="submit">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<!-- Include Bootstrap JS -->
+
+{% endblock %}

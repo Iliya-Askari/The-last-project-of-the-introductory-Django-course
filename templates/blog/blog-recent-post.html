@@ -1,0 +1,15 @@
+{% load static %}
+{% load humanize %} 
+{% load blog_tags %}
+<h3 class="sidebar-title">Recent Posts</h3>
+            <div class="sidebar-item recent-posts">
+              {% for post in posts %}
+              <div class="post-item clearfix">
+                <img src="{{post.image.url}}" alt="">
+                <h4><a href="{% url 'blog:single'  pid=post.id %}">{{post.title}}</a></h4>
+                <p>    {{post.published_date|naturaltime}}</p>
+                {% endfor %}
+              </div>
+
+
+            </div><!-- End sidebar recent posts-->

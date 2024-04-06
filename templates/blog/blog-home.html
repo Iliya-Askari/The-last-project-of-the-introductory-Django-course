@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+{% load blog_tags %}
+{% block body %}
+<main id="main">
+  <!-- ======= Breadcrumbs ======= -->
+  <section class="breadcrumbs">
+    <div class="container">
+      <ol>
+        <li><a href="{% url 'web:index' %}">Home</a></li>
+        <li>Blog</li>
+      </ol>
+      <h2>Blog</h2>
+    </div>
+  </section><!-- End Breadcrumbs -->
+  <!-- ======= Blog Section ======= -->
+  <section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+     
+      <div class="row">
+        <div class="col-lg-8 entries">
+          {% for post in posts %}
+          <article class="entry">
+            <div class="entry-img">
+              <img src="{{post.image.url}}" alt="" class="img-fluid">
+            </div>
+            <h2 class="entry-title">
+              <a href="{% url 'blog:single'  pid=post.id%}">{{post.title}}</a>
+            </h2>
+            {% for cat in post.category.all %}
+                <a href="{% url 'blog:category' cat_name=cat.name %}">{{cat.name}}{% if not forloop.last %},{% endif %}</a>
+              {% endfor %}
+            <div class="entry-meta">
+              <ul>
+                <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="{% url 'blog:author' author_username=post.author.username %}">{{post.author.get_full_name}}</a></li>
+                <li class="d-flex align-items-center"><i class="bi bi-clock"></i><time datetime="2020-01-01">{{post.published_date|date:"d/m/Y"}}</time></li>  
+                <li class="d-flex align-items-center"><i class="bi bi-eye"></i>{{post.counted_views}} views</li>
+              </ul>
+            </div>
+            <div class="entry-content">
+              <p>
+                {{post.content|safe|truncatewords:10}}
+              </p>
+              <div class="read-more">
+                <a href="{% url 'blog:single'  pid=post.id%}">Read More</a>
+              </div>
+            </div>
+          </article><!-- End blog entry -->
+          {% endfor %}
+          <nav class="blog-pagination justify-content-center d-flex">
+            <ul class="pagination">
+                <li class="page-item">
+                    {% if posts.has_previous %}
+                        <a href="?page={{ posts.previous_page_number }}" class="page-link" aria-label="Previous">
+                            <span aria-hidden="true">
+                                <span class="lnr lnr-chevron-left"></span>
+                            </span>
+                        </a>
+                    {% endif %}
+                </li>
+                {% for i in posts.paginator.page_range %}
+                    {% if posts.number == i %}
+                        <li class="page-item active"><a href="?page={{i}}" class="page-link">{{i}}</a></li>
+                    {% else %}
+                        <li class="page-item"><a href="?page={{i}}" class="page-link">{{i}}</a></li>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item">
+                    {% if posts.has_next %}
+                        <a href="?page={{ posts.next_page_number }}" class="page-link" aria-label="Next">
+                            <span aria-hidden="true">
+                                <span class="lnr lnr-chevron-right"></span>
+                            </span>
+                        </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+        </div><!-- End blog entries list -->
+        <div class="col-lg-4">
+          <div class="sidebar">
+            {% include 'blog/blog-search.html' %}
+            {% postcategotys %}
+            {% lastposts %}
+          </div><!-- End sidebar -->
+        </div><!-- End blog sidebar -->
+      </div>
+    </div>
+  </section><!-- End Blog Section -->
+</main><!-- End #main -->
+<!-- ======= Footer ======= -->
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load blog_tags %}
+{% block body %}
+
+<main id="main">
+  <!-- ======= Breadcrumbs ======= -->
+  <section class="breadcrumbs">
+    <div class="container">
+      <ol>
+        <li><a href="{% url 'web:index' %}">Home</a></li>
+        <li><a href="{% url 'blog:home' %}">Blog</a></li>
+        <li>Blog Single</li>
+      </ol>
+      <h2>Blog Single</h2>
+    </div>
+  </section><!-- End Breadcrumbs -->
+  <!-- ======= Blog Single Section ======= -->
+  <section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+      <div class="row">
+        <div class="col-lg-8 entries">
+          <article class="entry entry-single">
+            <div class="entry-img">
+              <img src="{{post.image.url}}" alt="" class="img-fluid">
+            </div>
+            <h2 class="entry-title">
+              {{post.title}}
+            </h2>
+            <div class="entry-meta">
+              <ul>
+                <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
+                    href="{% url 'blog:author' author_username=post.author.username %}">{{post.author.get_full_name}}</a>
+                </li>
+                <li class="d-flex align-items-center"><i class="bi bi-clock"></i> {{post.published_date|date:"d/m/Y"}}
+                </li>
+                <li class="d-flex align-items-center"><i class="bi bi-eye"></i>{{post.counted_views}} views</li>
+                <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i>{{post.comments|length}}
+                  Comments</li>
+              </ul>
+            </div>
+            <div class="entry-content">
+              <p>
+                {{post.content|safe}}
+            </div>
+            <div class="">
+              <div class="nex-prev-post" style="display: flex; justify-content: space-between;">
+                <div calss="next" dir="ltr">
+                {% if next_post %}
+                <div class="next-post" >
+                    <a href="{% url 'blog:single' next_post.id %}">
+                        <img src="{{next_post.image.url}}" width="95" height="60">
+                        <p style="font-size: 25px;"><a href="{% url 'blog:single' next_post.id %}">{{next_post.title}}</a></p>
+                    </a>
+                </div>
+              
+                {% endif %}
+              </div>
+                <div class="prev" dir="rtl">
+                {% if prev_post %}
+                <div class="next-post" >
+                    <a href="{% url 'blog:single' prev_post.id %}">
+                        <img src="{{prev_post.image.url}}" width="95" height="60">
+                        <p style="font-size: 25px;"><a href="{% url 'blog:single' prev_post.id %}">{{prev_post.title}}</a></p>
+                    </a>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            
+      </div>
+            <div class="entry-footer">
+              <i class="bi bi-folder"></i>
+              
+              <ul class="cats">
+                {% for cat in post.category.all %}
+                <li><a href="{% url 'blog:category' cat_name=cat.name %}">{{cat.name}}{% if not forloop.last %},{% endif%}
+                    </a></li>
+                {% endfor %}
+              </ul>
+              <i class="bi bi-tags"></i>
+              <ul class="tags">
+                {% for tags in post.tag.all %}
+                <li><a href="{% url 'blog:tag' tag_name=tags.name %}">{{tags.name}}{% if not forloop.last %}{% endif%}
+                    </a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </article><!-- End blog entry -->
+          {% include 'blog/blog-author.html' %}
+          {% include 'blog/blog-comments.html' %}
+        </div><!-- End blog entries list -->
+        <div class="col-lg-4">
+          <div class="sidebar">
+            {% postcategotys %}
+            {% lastposts %}
+            {% include 'blog/blog-tag.html' %}
+          </div><!-- End sidebar -->
+        </div><!-- End blog sidebar -->
+      </div>
+    </div>
+  </section><!-- End Blog Single Section -->
+</main><!-- End #main -->
+<!-- ======= Footer ======= -->
+{% endblock %}

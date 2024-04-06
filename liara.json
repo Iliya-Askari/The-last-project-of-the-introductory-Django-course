@@ -5,7 +5,7 @@
       "collectStatic": true,
       "compileMessages": false,
       "modifySettings": true,
-      "timezone": "Asia/Tehran"
+      "timezone": "UTC"
       
     },
     "app": "askari",

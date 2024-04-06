@@ -13,16 +13,15 @@ DEBUG = False
 ALLOWED_HOSTS = ["*"]
 SITE_ID = 2
 
-from decouple import config
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'interesting_blackwell',
         'USER': 'root',
-        'PASSWORD': 'x8W82CEhzDjwaYwVivcnPdTP',
-        'HOST': 'askari86',
-        'PORT': 5432,
+        'PASSWORD': 'IceQ8HD91S2lgl9Y6MSB7UmA',
+        'HOST': 'askari1386',
+        'PORT': 3306,
     }
 }
 
